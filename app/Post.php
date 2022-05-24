@@ -37,4 +37,9 @@ class Post extends Model
     public function category() {
         return $this->belongsTo('App\Category');
     }
+
+    // Relazione Many-to-Many con la tabella tags
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
 }
