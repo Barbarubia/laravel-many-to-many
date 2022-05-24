@@ -59,10 +59,10 @@
                 <h5 class="my-0">#id</h5>
             </div>
             <div class="col-3 d-flex align-items-center border py-1">
-                <h5 class="my-0">Title</h5>
+                <h5 class="my-0">Title / Slug</h5>
             </div>
             <div class="col-2 d-flex align-items-center border py-1">
-                <h5 class="my-0">Slug</h5>
+                <h5 class="my-0">Tags</h5>
             </div>
             <div class="col-1 d-flex align-items-center border py-1">
                 <h5 class="my-0">Category</h5>
@@ -84,13 +84,16 @@
                     <p class="my-0">{{ $post->id }}</p>
                 </div>
                 <div class="col-3 d-flex align-items-center border py-1">
-                    <p class="my-0">{{ $post->title }}</p>
+                    <div>
+                        <p class="my-0">{{ $post->title }}</p>
+                        <small class="my-0">({{ $post->slug }})</small>
+                    </div>
                 </div>
                 <div class="col-2 d-flex align-items-center border py-1">
-                    <p class="my-0">{{ $post->slug }}</p>
+                    <small class="my-0">{{ $post->tags->pluck('name')->join(' - ') }}</small>
                 </div>
                 <div class="col-1 d-flex align-items-center border py-1">
-                    <p class="my-0">{{ $post->category->category }}</p>
+                    <small class="my-0">{{ $post->category->category }}</small>
                 </div>
                 <div class="col-1 d-flex align-items-center border py-1">
                     <p class="my-0">{{ $post->user->name }}</p>
