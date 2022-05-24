@@ -90,25 +90,18 @@ class PostController extends Controller
             'user_id' => Auth::user()->id
         ];
 
-        // Generazione tags
+        // Attribuzione tags già esistenti o generazione nuovi tags se non esistenti
         preg_match_all('/#(\S*)/', $inputForm['tags'], $newTags);
 
         $tagIds = [];
 
-        $existingTags = Tag::all();
-        // dd($existingTags->pluck('name')->toArray());
+        foreach ($newTags[1] as $tag) {
+            $newTag = Tag::firstOrCreate([
+                'name' => $tag,
+                'slug'  => Str::slug($tag)
+            ]);
 
-        foreach($newTags[1] as $tag) {
-            if (!in_array($tag, $existingTags->pluck('name')->toArray())) {
-                $newTag = Tag::create([
-                    'name'  => $tag,
-                    'slug'  => Str::slug($tag)
-                ]);
-
-                $tagIds[] = $newTag->id;
-            }
-            // else {
-            // }
+            $tagIds[] = $newTag->id;
         }
 
         $inputForm['tags'] = $tagIds;
@@ -173,13 +166,14 @@ class PostController extends Controller
         // Modifica dei dati nel database
         $inputForm = $request->all();
 
-        // Generazione tags
+        // Attribuzione tags già esistenti o generazione nuovi tags se non esistenti
         preg_match_all('/#(\S*)/', $inputForm['tags'], $newTags);
 
         $tagIds = [];
-        foreach($newTags[1] as $tag) {
-            $newTag = Tag::create([
-                'name'  => $tag,
+
+        foreach ($newTags[1] as $tag) {
+            $newTag = Tag::firstOrCreate([
+                'name' => $tag,
                 'slug'  => Str::slug($tag)
             ]);
 
