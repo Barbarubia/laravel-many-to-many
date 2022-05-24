@@ -136,7 +136,9 @@ class PostController extends Controller
         if (Auth::user()->id !== $post->user_id) abort(403);
 
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -163,7 +165,26 @@ class PostController extends Controller
         // Modifica dei dati nel database
         $inputForm = $request->all();
 
+        // Generazione tags
+        preg_match_all('/#(\S*)/', $inputForm['tags'], $newTags);
+
+        $tagIds = [];
+        foreach($newTags[1] as $tag) {
+            $newTag = Tag::create([
+                'name'  => $tag,
+                'slug'  => Str::slug($tag)
+            ]);
+
+            $tagIds[] = $newTag->id;
+        }
+
+        $inputForm['tags'] = $tagIds;
+
         $post->update($inputForm);
+        // prima cancello i tags già presenti
+        $post->tags()->detach();
+        // e poi li riaggiorno con quelli inseriti nel form di edit, in questo modo non creo doppioni di tag sullo stesso post
+        $post->tags()->attach($inputForm['tags']);
 
         // Reindirizzamento alla pagina del post
         return redirect()->route('admin.posts.show', $post->slug)->with('modified', 'Post modified with success!');
