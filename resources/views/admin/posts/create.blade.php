@@ -38,6 +38,13 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="tags" class="form-label">Tags - Put a # before the tags. Ex: #hello #world</label>
+                        <input type="text" class="form-control" id="tags" name="tags" value="{{ old('tags') }}">
+                        @error('tags')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="image" class="form-label">Image Url - Insert a valid URL. Ex: https://picsum.photos/id/1/400/300</label>
                         <input type="text" class="form-control" id="image" name="image" value="{{ old('image') }}">
                         @error('image')

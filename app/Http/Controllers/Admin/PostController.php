@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\User;
 use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -64,7 +66,12 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return  view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+
+        return  view('admin.posts.create', [
+            'categories'    => $categories,
+            'tags'          => $tags
+        ]);
     }
 
     /**
@@ -83,8 +90,24 @@ class PostController extends Controller
             'user_id' => Auth::user()->id
         ];
 
+        // Generazione tags
+        preg_match_all('/#(\S*)/', $inputForm['tags'], $newTags);
+
+        $tagIds = [];
+        foreach($newTags[1] as $tag) {
+            $newTag = Tag::create([
+                'name'  => $tag,
+                'slug'  => Str::slug($tag)
+            ]);
+
+            $tagIds[] = $newTag->id;
+        }
+
+        $inputForm['tags'] = $tagIds;
+
         // Creazione della nuova riga nel database con i dati inseriti nel form
         $newPost = Post::create($inputForm);
+        $newPost->tags()->attach($inputForm['tags']);
 
         // Redirect al post creato
         return redirect()->route('admin.posts.show', $newPost->slug)->with('created', 'Post created with success!');;
