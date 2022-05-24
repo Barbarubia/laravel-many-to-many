@@ -94,13 +94,21 @@ class PostController extends Controller
         preg_match_all('/#(\S*)/', $inputForm['tags'], $newTags);
 
         $tagIds = [];
-        foreach($newTags[1] as $tag) {
-            $newTag = Tag::create([
-                'name'  => $tag,
-                'slug'  => Str::slug($tag)
-            ]);
 
-            $tagIds[] = $newTag->id;
+        $existingTags = Tag::all();
+        // dd($existingTags->pluck('name')->toArray());
+
+        foreach($newTags[1] as $tag) {
+            if (!in_array($tag, $existingTags->pluck('name')->toArray())) {
+                $newTag = Tag::create([
+                    'name'  => $tag,
+                    'slug'  => Str::slug($tag)
+                ]);
+
+                $tagIds[] = $newTag->id;
+            }
+            // else {
+            // }
         }
 
         $inputForm['tags'] = $tagIds;
