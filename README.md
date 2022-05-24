@@ -1,6 +1,6 @@
 <p align="center"><img src="https://www.filepicker.io/api/file/PrjQ7ZxTQye3aR2Tzt3N" width="400"></p>
 
-# Laravel Boolpress Project
+# Laravel Boolpress Project | Parte 3
 
 In questa repo noi della Classe #56 del corso per Full Stack Web Developers di Boolean Careers abbiamo l'obiettivo di creare un CMS per la gestione di posts con la possibilità di registrarsi come utenti e accedere ad ulteriori funzionalità (creazione/editing/rimozione dei posts).
 
