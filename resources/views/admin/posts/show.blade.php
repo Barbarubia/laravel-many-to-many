@@ -19,6 +19,7 @@
             <div class="col-3 p-3">
                 <h6>Info post:</h6>
                 <small>Category: {{ $post->category->category }}</small><br>
+                <small>Tags: {{ $post->tags->pluck('name')->join(', ') }}</small><br>
                 <small>Created: {{ $post->created_at->format('d-m-Y H:i') }}</small>
                 @if ($post['updated_at'] != $post['created_at'])
                     <br>
