@@ -180,6 +180,9 @@ class PostController extends Controller
         // Ogni user può eliminare solo i propri posts
         if (Auth::user()->id !== $post->user_id) abort(403);
 
+        // Prima di eliminare il post dalla tabella posts, lo elimino dalla tabella pivot usando il metodo detach
+        $post->tags()->detach();
+
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('deleted', 'Post #' . $post->id . ' deleted with success!');;
