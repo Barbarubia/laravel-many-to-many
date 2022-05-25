@@ -37,10 +37,16 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <small>Name: {{ $post->user->name }}</small><br>
-                        <small>From: {{ $post->user->userInfo->city }}</small><br>
-                        <small>Age: {{ $post->user->userInfo->age() }}</small>
+                        @if ($post->user->userInfo->city)
+                            <small>From: {{ $post->user->userInfo->city }}</small><br>
+                        @endif
+                        @if ($post->user->userInfo->birthday)
+                            <small>Age: {{ $post->user->userInfo->age() }}</small>
+                        @endif
                     </div>
-                    <img class="w-25 h-25 rounded-circle" src="{{ $post->user->userInfo->avatar }}" alt="{{ $post->user->name }}'s Avatar">
+                    @if ($post->user->userInfo->avatar)
+                        <img class="w-25 h-25 rounded-circle" src="{{ $post->user->userInfo->avatar }}" alt="{{ $post->user->name }}'s Avatar">
+                    @endif
                 </div>
             </div>
         </div>
