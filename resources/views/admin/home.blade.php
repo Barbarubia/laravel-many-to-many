@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('pageTitle', 'Home ' . Auth::user()->name)
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
