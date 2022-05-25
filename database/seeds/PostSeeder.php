@@ -15,8 +15,8 @@ class PostSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        // Genero 100 post utilizzando il faker
-        for ($i=0; $i < 100; $i++) {
+        // Genero 1000 post utilizzando il faker
+        for ($i=0; $i < 1000; $i++) {
             $title = $faker->words(rand(1, 10), true);
             Post::create([
                 'title'         => $title,

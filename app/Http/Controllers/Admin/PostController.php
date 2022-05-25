@@ -30,7 +30,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::where('id', '>', 0);
+        $posts = Post::whereRaw('1 = 1');
 
         // if ($request->search) {
         //     $posts->where('title', 'LIKE', "%$request->search%");
@@ -53,6 +53,10 @@ class PostController extends Controller
         }
 
         $posts = $posts->paginate(25);
+
+        $queries = $request->query();
+        unset($queries['page']);
+        $posts->withPath('?' . http_build_query($queries, '', '&'));
 
         $categories = Category::all();
 
