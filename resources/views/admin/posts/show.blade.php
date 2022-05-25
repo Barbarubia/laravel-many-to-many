@@ -49,7 +49,7 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                <a href="{{ url()->previous() }}" class="btn btn-primary fw-bold">Go Back</a>
+                <a href="{{ route('admin.posts.index') }}" class="btn btn-primary fw-bold">Go to index</a>
             </div>
         </div>
     </div>
