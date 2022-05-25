@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <form action="" method="get" class="row d-flex flex-column gy-3 mb-5">
+        <form action="" method="get" class="row d-flex align-items-stretch bg-white border py-2 mb-5">
             <div class="col-3 mb-2">
                 <label for="search-string" class="form-label mb-0">Text to search:</label>
                 <input type="text" class="form-control" id="search-string" name="search" value="{{ $request->search }}">
@@ -49,8 +49,9 @@
                 </select>
             </div>
 
-            <div class="col-3">
+            <div class="col-3 d-flex justify-content-between align-items-center">
                 <button class="btn btn-primary">Apply filters</button>
+                <a href="{{ route('admin.posts.index') }}" class="btn btn-primary fw-bold">Reset filters</a>
             </div>
         </form>
 
