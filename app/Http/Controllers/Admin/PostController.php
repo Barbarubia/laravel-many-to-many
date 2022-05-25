@@ -32,8 +32,16 @@ class PostController extends Controller
     {
         $posts = Post::where('id', '>', 0);
 
+        // if ($request->search) {
+        //     $posts->where('title', 'LIKE', "%$request->search%");
+        // }
+
+        // Stringa di ricerca sia nel titolo che nel contenuto del post
         if ($request->search) {
-            $posts->where('title', 'LIKE', "%$request->search%");
+            $posts->where(function($query) use ($request) {
+                $query->where('title', 'LIKE', "%$request->search%")
+                    ->orWhere('content', 'LIKE', "%$request->search%");
+            });
         }
 
         if ($request->category) {
