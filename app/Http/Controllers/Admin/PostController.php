@@ -172,7 +172,8 @@ class PostController extends Controller
         $tagIds = [];
 
         foreach ($newTags[1] as $tag) {
-            $newTag = Tag::firstOrCreate([
+            // Sostituito firstOrCreate con updateOrCreate (con il primo mi creava una riga vuota nella tabella dei tags)
+            $newTag = Tag::updateOrCreate([
                 'name' => $tag,
                 'slug'  => Str::slug($tag)
             ]);
